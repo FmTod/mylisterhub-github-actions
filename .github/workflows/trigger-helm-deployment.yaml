@@ -9,9 +9,8 @@ on:
         default: 'patch'
         type: string
       charts:
-        description: 'Charts to update (comma-separated, leave empty for all)'
-        required: false
-        default: ''
+        description: 'Charts to update'
+        required: true
         type: string
       target_repo:
         description: 'Target repository (owner/repo)'
@@ -28,7 +27,7 @@ on:
             required: false
             type: string
         charts:
-            required: false
+            required: true
             type: string
         target_repo:
             required: false
