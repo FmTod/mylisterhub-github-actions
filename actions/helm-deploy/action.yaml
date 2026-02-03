@@ -19,9 +19,6 @@ runs:
   using: 'composite'
 
   steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
-
   - name: Extract version information
     id: version
     shell: bash
@@ -66,7 +63,7 @@ runs:
   - name: Trigger production deployment
     uses: peter-evans/repository-dispatch@v3
     with:
-      token: ${{ inputs.deployment_token }}
+      token: ${{ inputs.token }}
       repository: ${{ steps.params.outputs.target_repo }}
       event-type: deploy-production
       client-payload: |
