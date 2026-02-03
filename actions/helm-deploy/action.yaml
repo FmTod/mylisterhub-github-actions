@@ -24,6 +24,7 @@ runs:
 
   - name: Extract version information
     id: version
+    shell: bash
     run: |
       if [ "${{ github.event_name }}" = "release" ]; then
         # Extract version from release tag
@@ -46,6 +47,7 @@ runs:
 
   - name: Set deployment parameters
     id: params
+    shell: bash
     run: |
       APP_VERSION="${{ steps.version.outputs.app_version }}"
       CHARTS="${{ github.event.inputs.charts }}"
@@ -79,6 +81,7 @@ runs:
         }
 
   - name: Create deployment summary
+    shell: bash
     run: |
       echo "## Production Deployment Triggered" >> $GITHUB_STEP_SUMMARY
       echo "- **App Version**: ${{ steps.params.outputs.app_version }}" >> $GITHUB_STEP_SUMMARY
@@ -92,6 +95,7 @@ runs:
 
   - name: Notify deployment trigger failure
     if: failure()
+    shell: bash
     run: |
       echo "❌ Failed to trigger production deployment"
       echo "Repository: ${{ github.repository }}"
