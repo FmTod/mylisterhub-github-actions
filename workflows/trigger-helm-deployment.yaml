@@ -12,12 +12,11 @@ on:
         description: 'Charts to update'
         required: true
         type: string
-      target_repo:
+      repo:
         description: 'Target repository (owner/repo)'
-        required: false
-        default: 'FmTod2/mylisterhub-cloud-config'
+        required: true
         type: string
-      deployment_token:
+      token:
         description: 'GitHub token with permissions to trigger deployment'
         required: true
         type: string
@@ -29,10 +28,10 @@ on:
         charts:
             required: true
             type: string
-        target_repo:
-            required: false
+        repo:
+            required: true
             type: string
-        deployment_token:
+        token:
             required: true
             type: string
 
@@ -72,14 +71,8 @@ jobs:
       id: params
       run: |
         APP_VERSION="${{ steps.version.outputs.app_version }}"
-
-        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          CHARTS="${{ github.event.inputs.charts }}"
-          TARGET_REPO="${{ github.event.inputs.target_repo }}"
-        else
-          CHARTS=""  # Deploy all charts for automated triggers
-          TARGET_REPO="FmTod2/mylisterhub-cloud-config"
-        fi
+        CHARTS="${{ github.event.inputs.charts }}"
+        TARGET_REPO="${{ github.event.inputs.repo }}"
 
         echo "app_version=$APP_VERSION" >> $GITHUB_OUTPUT
         echo "charts=$CHARTS" >> $GITHUB_OUTPUT
